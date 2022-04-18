@@ -1,6 +1,16 @@
 import React from "react"
 import styled from "styled-components"
+import ReactStars from "react-rating-stars-component"
 import selectedImage from "../assets/display_image.png"
+
+
+const info = {
+    count: 5,
+    size: 50,
+    char: "☆",
+  };
+
+
 
 const Div = styled.div`
 background-color: #000;
@@ -10,7 +20,7 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 width: 900px;
-height: 638px;
+height: 750px;
 border: solid white 1px;
 border-radius: 10px;
 top: 6em;
@@ -89,6 +99,33 @@ img{
 const Input = styled.input`
 display: none;
 `
+const Status = styled.div`
+margin-left: 5em;
+`
+const RadioInputs = styled.div`
+display: flex;
+justify-content: space-between;
+width: 120%;
+
+div{
+    display: flex;
+}
+
+div input{
+    width: 30px;
+    height: 24px;
+
+    &:checked{
+    background: transparent;
+    }
+}
+div label{
+    margin-top: 0.3em
+}
+`
+const Rate = styled.div`
+margin-left: 5em;
+`
 
 export default function FilmModal({ open, close }) {
     if (!open) return null
@@ -111,10 +148,27 @@ export default function FilmModal({ open, close }) {
                 <ImageSection>
                     <SelectImage for="selectButton">Selecione imagem</SelectImage>
                     <Input type="file" id="selectButton" />
-                    <img src={selectedImage} alt=""/>
+                    <img src={selectedImage} alt="" />
                     <p>Imagem de Capa</p>
                 </ImageSection>
             </Container>
+            <Status>
+                <p>Status</p>
+                <RadioInputs>
+                    <div>
+                        <input type="radio" name="status" value="seen" />
+                        <label>Já Assisti</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="status" value="not seen" />
+                        <label>Não assisti ainda</label>
+                    </div>
+                </RadioInputs>
+            </Status>
+            <Rate>
+                <h3>Nota</h3>
+                <ReactStars { ...info } />
+            </Rate>
         </Div>
     )
 }
