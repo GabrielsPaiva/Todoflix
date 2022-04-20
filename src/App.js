@@ -1,6 +1,7 @@
 import React from "react"
-import styled, { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from "styled-components"
 import Header from "./components/Header"
+import Main from "./components/Main"
 
 const GlobalStyle = createGlobalStyle`
 *{
@@ -20,6 +21,7 @@ export default function App(){
     <div>
       <GlobalStyle/>
       <Header />
+      <Main/>
     </div>
   )
 }

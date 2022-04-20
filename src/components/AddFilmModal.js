@@ -1,14 +1,21 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import ReactStars from "react-rating-stars-component"
 import selectedImage from "../assets/display_image.png"
+import RedButton from "./RedButton"
+import { render } from "@testing-library/react"
 
 
 const info = {
     count: 5,
     size: 50,
     char: "☆",
-  };
+};
+
+const P = styled.p`
+margin-bottom: 14px;
+`
+
 
 
 
@@ -26,19 +33,6 @@ border-radius: 10px;
 top: 6em;
 left: 29%;
 z-index: 1;
-
-h2{
-    font-size: 29px;
-    font-family: Arial, Regular;
-    margin-bottom: 1.5em;
-}
-input{
-    margin-bottom: 2.5em;
-    border-radius: 5px;
-}
-p{
-    margin-bottom: 14px;
-}
 `
 const CloseButton = styled.p`
 font-size: 40px;
@@ -54,21 +48,33 @@ display: flex;
 flex-direction: column;
 margin: 1.5em 0 0 5em;
 `
+const ModalTitle = styled.h2`
+font-size: 29px;
+font-family: Arial, Regular;
+margin-bottom: 1.5em;
+`
+const InputTitle = styled.p`
+    margin-bottom: 14px;
+`
 const NameInput = styled.input`
-    background-color: #2C2C2C;
-    border: none;
-    width: 400px;
-    height: 30px;
-    outline: none;
+background-color: #2C2C2C;
+border: none;
+border-radius: 5px;
+width: 400px;
+height: 30px;
+margin-bottom: 2.5em;
+outline: none;
 `
 const OverviewInput = styled.textarea`
-    background-color: #2C2C2C;
-    border: none;
-    border-radius: 5px;
-    width: 400px;
-    height: 80px;
-    outline: none;
-    text-align: top;
+background-color: #2C2C2C;
+border: none;
+border-radius: 5px;
+font-size: 14.5px;
+width: 400px;
+height: 80px;
+margin-bottom: 2.5em;
+outline: none;
+text-align: top;
 `
 const SelectImage = styled.label`
     background-color: whitesmoke;
@@ -90,19 +96,18 @@ flex-direction: column-reverse;
 width: 300px;
 height: 15.2em;
 margin: 6.3em 0 0 2em;
-
-img{
-    border: solid 1px gray;
-    border-radius: 4px;
-}
 `
 const Input = styled.input`
 display: none;
 `
+const FilmImage = styled.img`
+    border: solid 1px gray;
+    border-radius: 4px;
+`
 const Status = styled.div`
 margin-left: 5em;
 `
-const RadioInputs = styled.div`
+const RadioInputsDiv = styled.div`
 display: flex;
 justify-content: space-between;
 width: 120%;
@@ -110,65 +115,118 @@ width: 120%;
 div{
     display: flex;
 }
-
-div input{
+`
+const RadioInput = styled.input`
     width: 30px;
     height: 24px;
-
-    &:checked{
-    background: transparent;
-    }
-}
-div label{
-    margin-top: 0.3em
-}
 `
-const Rate = styled.div`
+const Label = styled.label`
+    margin-top: 0.3em
+`
+const RateDiv = styled.div`
 margin-left: 5em;
 `
+const RateTitle = styled.h3`
+margin-top: 1em;
+`
+const BottomButtons = styled.div`
+display: flex;
+width: 210px;
+height: 40px;
+margin: 4em 0 0 38%;
+`
+const CancelButton = styled.button` 
+background: black;
+border: none;
+font-size: 16px;
+width: 50%;
+height: 100%;
+cursor: pointer;
+`
+const ConfirmButton = styled.button`
+background: #E71B27;
+border-radius: 6px;
+border: none;
+width: 50%;
+height: 100%;
+cursor: pointer;
 
-export default function FilmModal({ open, close }) {
-    if (!open) return null
+&:hover{
+    border: solid 1px white;
+}:active{
+    border: none;
+}
+`
 
-    return (
-        <Div>
-            <CloseButton onClick={close}>+</CloseButton>
-            <Container>
-                <Main>
-                    <h2>Adicionar Filme</h2>
-                    <div>
-                        <p>nome</p>
-                        <NameInput type="text" />
-                    </div>
-                    <div>
-                        <p>descrição</p>
-                        <OverviewInput maxLength={200} />
-                    </div>
-                </Main>
-                <ImageSection>
-                    <SelectImage for="selectButton">Selecione imagem</SelectImage>
-                    <Input type="file" id="selectButton" />
-                    <img src={selectedImage} alt="" />
-                    <p>Imagem de Capa</p>
-                </ImageSection>
-            </Container>
-            <Status>
-                <p>Status</p>
-                <RadioInputs>
-                    <div>
-                        <input type="radio" name="status" value="seen" />
-                        <label>Já Assisti</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="status" value="not seen" />
-                        <label>Não assisti ainda</label>
-                    </div>
-                </RadioInputs>
-            </Status>
-            <Rate>
-                <h3>Nota</h3>
-                <ReactStars { ...info } />
-            </Rate>
-        </Div>
-    )
+export default class FilmModal extends React.Component {
+
+    state = {
+        overviewLenght: 0
+    }
+
+    handleOverviewChange = (e) => {
+        if(e.target.value.length > 0){
+            this.setState({
+                overviewLenght: e.target.value.length
+            })
+        }else{
+            this.setState({
+                overviewLenght: 0
+            })
+        }
+      };
+
+    render() {
+        if (!this.props.open) return null
+        const {overviewLenght} = this.state
+        const {close, open} = this.props
+        return (
+            <Div>
+                <CloseButton onClick={close}>+</CloseButton>
+                <Container>
+                    <Main>
+                        <ModalTitle>Adicionar Filme</ModalTitle>
+                        <div>
+                            <InputTitle>nome</InputTitle>
+                            <NameInput type="text" />
+                        </div>
+                        <div>
+                            <div style={{display: "flex", "justify-content": "space-between"}}>
+                                <InputTitle>descrição</InputTitle>
+                                <P>{`${overviewLenght}/ 200`}</P>
+                            </div>
+                            <OverviewInput maxLength={200} onChange={this.handleOverviewChange} />
+                        </div>
+                    </Main>
+                    <ImageSection>
+                        <SelectImage for="selectButton">Selecione imagem</SelectImage>
+                        <Input type="file" id="selectButton" />
+                        <FilmImage src={selectedImage} alt="" />
+                        <P>Imagem de Capa</P>
+                    </ImageSection>
+                </Container>
+                <Status>
+                    <P>Status</P>
+                    <RadioInputsDiv>
+                        <div>
+                            <RadioInput type="radio" name="status" value="seen" />
+                            <Label>Já Assisti</Label>
+                        </div>
+                        <div>
+                            <RadioInput type="radio" name="status" value="not seen" />
+                            <Label>Não assisti ainda</Label>
+                        </div>
+                    </RadioInputsDiv>
+                </Status>
+                <RateDiv>
+                    <RateTitle>Nota</RateTitle>
+                    <ReactStars {...info} />
+                </RateDiv>
+                <BottomButtons>
+                    <CancelButton onClick={close}>Cancelar</CancelButton>
+                    <ConfirmButton>Confirmar</ConfirmButton>
+                </BottomButtons>
+            </Div>
+        )
+    }
 }

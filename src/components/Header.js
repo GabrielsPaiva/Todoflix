@@ -8,7 +8,6 @@ import Modal from './CategoryModal'
 import FilmModal from "./AddFilmModal"
 import AddButton from "./RedButton"
 
-
 // styles
 import styled from "styled-components"
 
@@ -97,7 +96,7 @@ export default class Header extends React.Component {
                     <div>
                         <AddButton
                             click={() => { this.setState({ addFilmIsOpen: true }) }}
-                            buttonText="Adicionar"
+                            buttonText="Adicionar filme"
                         />
                         <FilmModal
                             open={this.state.addFilmIsOpen}
