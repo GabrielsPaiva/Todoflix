@@ -7,6 +7,8 @@ import Films from "./FilmsLibrary";
 // libs
 import Carousel from "nuka-carousel";
 
+const Div = styled.div`
+`
 
 const LastFilmDiv = styled.div`
 width: 64%;
@@ -29,10 +31,11 @@ export default function Main(){
     const carouselSlider = {
         slidesToShow: 5,
         wrapAround: true,
+        pagination: false
     }
 
     return(
-        <div>
+        <Div>
             <LastFilmDiv>
                 <Films lastAdded object={0}/>
             </LastFilmDiv>
@@ -41,13 +44,13 @@ export default function Main(){
                 <H2>Destaques</H2>
             <Carousel {...carouselSlider}>
                 <Films slider object={0}/>
-                <Films slider object={0}/>
-                <Films slider object={0}/>
-                <Films slider object={0}/>
-                <Films slider object={0}/>
+                <Films slider object={1}/>
+                <Films slider object={2}/>
+                <Films slider object={3}/>
+                <Films slider object={4}/>
 
             </Carousel>
             </CarouselDiv>
-        </div>
+        </Div>
     )
 }

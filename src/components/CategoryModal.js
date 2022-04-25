@@ -1,6 +1,11 @@
 import React from "react"
 import styled from "styled-components"
 
+import {
+  Link
+} from "react-router-dom"
+
+
 const Div = styled.div`
 background-color: #000;
 position: relative;
@@ -14,9 +19,13 @@ top: 1em;
 left: 20%;
 z-index: 1;
 
+a{
+  text-decoration: none;
+}
+
 h2{
-  font-size: 13px;
-  margin: 6px;
+  font-size: 16px;
+  margin: 9px 0 0 5px;
   cursor: pointer;
 
   &:hover{
@@ -25,14 +34,14 @@ h2{
 }
 `
 
-export default function Modal( { open } ){
+export default function Modal({ open }) {
   if (!open) return null
-  return(
+  return (
     <Div>
-        <h2>Todos</h2>
-        <h2>Favoritos</h2>
-        <h2>Já Vistos</h2>
-        <h2>Adicionados</h2>
+      <Link to="todos"><h2>Todos</h2></Link>
+      <Link to="favoritos"><h2>Favoritos</h2></Link>
+      <Link to="jaVistos"><h2>Já Vistos</h2></Link>
+      <Link to="adicionados"><h2>Adicionados</h2></Link>
     </Div>
   )
 }

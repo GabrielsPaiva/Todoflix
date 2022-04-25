@@ -1,7 +1,18 @@
 import React from "react"
 import { createGlobalStyle } from "styled-components"
+
+// components
 import Header from "./components/Header"
 import Main from "./components/Main"
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom"
+import Todos from "./pages/Todos"
+import Search from "./pages/Search"
+
 
 const GlobalStyle = createGlobalStyle`
 *{
@@ -16,12 +27,22 @@ body{
 }
 `
 
-export default function App(){
-  return(
-    <div>
-      <GlobalStyle/>
+export default function App() {
+  return (
+    <Router>
+      <GlobalStyle />
       <Header />
-      <Main/>
-    </div>
+
+
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="todos" element={<Todos />} />
+        <Route path="favoritos" element={<Todos />} />
+        <Route path="jaVistos" element={<Todos />} />
+        <Route path="adicionados" element={<Todos />} />
+        <Route path="search" element={<Search/>}/>
+      </Routes>
+
+    </Router>
   )
 }

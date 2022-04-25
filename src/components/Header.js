@@ -1,9 +1,14 @@
 import React from "react"
 
 
+import {
+    Link
+} from "react-router-dom"
+
 // images & components
 import siteLogo from "../assets/site_logo.png"
 import profilePic from "../assets/profile_pic.png"
+import lupa from "../assets/pesquisa_lupa.png"
 import Modal from './CategoryModal'
 import FilmModal from "./AddFilmModal"
 import AddButton from "./RedButton"
@@ -19,14 +24,36 @@ justify-content: space-between;
 align-items: center;
 height: 6em;
 `
+const Container = styled.div`
+display: flex;
+align-items: center;
+width: 50%;
+height: 100%;
+
+.logoLink{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+    margin-left: 5%;
+}
+.homeLink{
+    margin-left: 5%;
+    text-decoration: none;
+}
+.searchLink{
+    width: 44%;
+    height: 2.3em;
+    margin-left: 8%;
+}
+`
 const Logo = styled.img`
-width: 18%;
-margin-left: 6%;
+width: 100%;
 `
 const Home = styled.p`
-font-size: 20px;
+font-size: 22px;
 font-weight: bolder;
-margin-left: 5%;
 `
 const CategoryModal = styled.div`
 position: absolute;
@@ -44,22 +71,17 @@ font-weight: 400;
 margin-left: 3%;
 `
 
-const Container = styled.div`
-display: flex;
-align-items: center;
-width: 50%;
-height: 100%;
-`
 const Search = styled.input`
 background-color: #2C2C2C;
+font-size: 20px;
 border-radius: 6px;
 border: none;
-width: 44%;
-height: 2.6em;
-margin-left: 8%;
+width: 100%;
+height: 100%;
 
 ::placeholder{
     color: white;
+    font-size: 15px;
     font-weight: lighter;
 }
 `
@@ -79,8 +101,8 @@ export default class Header extends React.Component {
         return (
             <Div>
                 <Container>
-                    <Logo src={siteLogo} alt="" />
-                    <Home>Inicio</Home>
+                    <Link to="/" className="logoLink"> <Logo src={siteLogo} alt="" /> </Link>
+                    <Link to="/" className="homeLink"> <Home>Inicio</Home></Link>
                     <CategoryModal
                         onMouseEnter={() => { this.setState({ categoryIsOpen: true }) }}
                         onMouseLeave={() => { this.setState({ categoryIsOpen: false }) }}
@@ -103,9 +125,10 @@ export default class Header extends React.Component {
                             close={() => { this.setState({ addFilmIsOpen: false }) }}
                         />
                     </div>
-                    <Search type='text' placeholder="            Pesquisar" />
+                    <Link to="search" className="searchLink"><Search type='text' placeholder="                Pesquisa"/></Link>
                     <Profile src={profilePic} />
                 </Container>
+
             </Div>
         )
     }
