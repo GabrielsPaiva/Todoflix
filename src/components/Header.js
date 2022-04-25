@@ -73,6 +73,7 @@ margin-left: 3%;
 
 const Search = styled.input`
 background-color: #2C2C2C;
+background-image: url(${lupa})
 font-size: 20px;
 border-radius: 6px;
 border: none;

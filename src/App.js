@@ -4,14 +4,17 @@ import { createGlobalStyle } from "styled-components"
 // components
 import Header from "./components/Header"
 import Main from "./components/Main"
+import Todos from "./pages/Todos"
+import Favoritos from "./pages/Favoritos"
+import JaVistos from "./pages/JaVistos"
+import Search from "./pages/Search"
 
 import {
   BrowserRouter as Router,
   Route,
   Routes,
 } from "react-router-dom"
-import Todos from "./pages/Todos"
-import Search from "./pages/Search"
+
 
 
 const GlobalStyle = createGlobalStyle`
@@ -37,9 +40,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="todos" element={<Todos />} />
-        <Route path="favoritos" element={<Todos />} />
-        <Route path="jaVistos" element={<Todos />} />
-        <Route path="adicionados" element={<Todos />} />
+        <Route path="favoritos" element={<Favoritos />} />
+        <Route path="jaVistos" element={<JaVistos />} />
         <Route path="search" element={<Search/>}/>
       </Routes>
 
