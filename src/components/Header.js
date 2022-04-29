@@ -101,21 +101,6 @@ export default class Header extends React.Component {
         handleInput: null
     }
 
-    filter = (e) => {
-        const search = this.state.Film.filter(item => {
-            if (item.name.toLowerCase().includes(e.target.value.toLowerCase())) {
-                return true;
-            }
-        })
-        this.setState({
-            searchResult: search
-        })
-        this.setState({
-            handleInput: e.target.value
-        })
-        console.log(this.state.searchResult)
-    }
-
     render() {
         return (
             <Div>
@@ -144,8 +129,10 @@ export default class Header extends React.Component {
                             close={() => { this.setState({ addFilmIsOpen: false }) }}
                         />
                     </div>
-                    <SearchBar id="search_bar" type='text' placeholder="Pesquisa" onChange={this.filter} />
-                    <Profile src={profilePic} />
+                    <Link className="searchLink" to="search">
+                        <SearchBar autoFocus={this.props.focus} type='text' placeholder="Pesquisa"/>
+                    </Link>
+                    <Profile id="profile" src={profilePic} />
                 </Container>
             </Div>
         )
