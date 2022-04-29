@@ -3,59 +3,28 @@ import styled from "styled-components";
 
 // components
 import FilmsLibrary from "../FilmsLibrary.json";
+import FavoriteButton from "../components/FavoriteButton";
+import * as S from "./styles/FilmBoxesStyle"
 
 // images
-import ThumbUp from "../assets/thumbUp.png"
+import ThumbUpGreen from "../assets/thumbUpGreen.png"
+import ThumbUpWhite from "../assets/thumbUpWhite.png"
+import ThumbUpOrange from "../assets/thumbUpOrange.png"
 
 
 // Films Catalogue
 
+const PageTitle = styled.h2`
+font-size: 40px;
+font-weight: lighter;
+margin: 2em 0 0 1em;
+`
 const FilmsCatalogueDiv = styled.div`
 display: flex;
 flex-wrap: wrap;
-justify-content: center;
-width: 100%;
+width: 85%;
 height: fit-content;
-`
-const FilmsCatalogueBox = styled.div`
-background-color: #2C2C2C;
-display: flex;
-flex-direction: column;
-align-items: center;
-border-radius: 10px;
-width: 430px;
-height: fit-content;
-margin: 5em;
-`
-const FilmsCataloguePoster = styled.img`
-border-radius: 10px;
-width: 100%;
-height: 240px;
-`
-const FilmsCatalogueTitle = styled.h2`
-font-size: 22px;
-text-align: center;
-margin-top: 10px;
-`
-const FilmsCatalogueOverview = styled.details`
-margin: 10px 0 0 5%;
-padding-bottom: 0.5em;
-`
-const FilmsCatalogueRateDiv = styled.div`
-position: relative;
-display: flex;
-width: 15%;
-top: 1.5em;
-left: 10em;
-`
-const FilmsCatalogueRate = styled.p`
-margin-top: 0.4em;
-font-size: 16px;
-`
-const FilmsCatalogueGreenThumb = styled.img`
-width: 40%;
-height: 26px;
-margin: 0 0 0.4em 8%;
+margin: 1.5em 0 0 3em;
 `
 
 export default function Todos() {
@@ -63,21 +32,26 @@ export default function Todos() {
   const Films = [...FilmsLibrary]
 
   return (
-    <FilmsCatalogueDiv>
-      {Films.map(item => (
-        <FilmsCatalogueBox key={item.id}>
-          <FilmsCataloguePoster src={item.poster} alt="" />
-          <FilmsCatalogueTitle>{item.name}</FilmsCatalogueTitle>
-
-          <FilmsCatalogueRateDiv key={item.id}>
-            <FilmsCatalogueRate>{`${item.rate}/5`}</FilmsCatalogueRate>
-            <FilmsCatalogueGreenThumb src={ThumbUp} />
-          </FilmsCatalogueRateDiv>
-          <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
-            <FilmsCatalogueOverview>{item.overview}</FilmsCatalogueOverview>
-          </div>
-        </FilmsCatalogueBox>
-      ))}
-    </FilmsCatalogueDiv>
+    <>
+      <PageTitle>Todos</PageTitle>
+      <FilmsCatalogueDiv>
+        {Films.map(item => (
+          <S.FilmDiv key={item.id}>
+            <S.FilmPoster src={item.poster} alt="" />
+            <FavoriteButton/>
+            <S.Container>
+              <S.FilmTitle>{item.name}</S.FilmTitle>
+              <S.FilmRateDiv key={item.id}>
+                <S.FilmRate>{`${item.rate}/5`}</S.FilmRate>
+                <S.GreenThumb src={ThumbUpGreen} alt="" />
+              </S.FilmRateDiv>
+            </S.Container>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+              <S.Overview>{item.overview}</S.Overview>
+            </div>
+          </S.FilmDiv>
+        ))}
+      </FilmsCatalogueDiv>
+    </>
   )
 }

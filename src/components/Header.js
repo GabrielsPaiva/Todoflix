@@ -12,9 +12,11 @@ import lupa from "../assets/pesquisa_lupa.png"
 import Modal from './CategoryModal'
 import FilmModal from "./AddFilmModal"
 import AddButton from "./RedButton"
+import FilmsLibrary from "../FilmsLibrary.json"
 
 // styles
 import styled from "styled-components"
+import Search from "../pages/Search"
 
 
 const Div = styled.div`
@@ -70,15 +72,17 @@ font-size: 20px;
 font-weight: 400;
 margin-left: 3%;
 `
-
-const Search = styled.input`
+const Profile = styled.img`
+margin-left: 5%;
+`
+const SearchBar = styled.input`
 background-color: #2C2C2C;
-background-image: url(${lupa})
 font-size: 20px;
 border-radius: 6px;
 border: none;
 width: 100%;
 height: 100%;
+outline: none;
 
 ::placeholder{
     color: white;
@@ -86,16 +90,30 @@ height: 100%;
     font-weight: lighter;
 }
 `
-const Profile = styled.img`
-margin-left: 5%;
-`
-
 
 export default class Header extends React.Component {
 
     state = {
         categoryIsOpen: false,
-        addFilmIsOpen: false
+        addFilmIsOpen: false,
+        Film: FilmsLibrary,
+        searchResult: [],
+        handleInput: null
+    }
+
+    filter = (e) => {
+        const search = this.state.Film.filter(item => {
+            if (item.name.toLowerCase().includes(e.target.value.toLowerCase())) {
+                return true;
+            }
+        })
+        this.setState({
+            searchResult: search
+        })
+        this.setState({
+            handleInput: e.target.value
+        })
+        console.log(this.state.searchResult)
     }
 
     render() {
@@ -126,10 +144,9 @@ export default class Header extends React.Component {
                             close={() => { this.setState({ addFilmIsOpen: false }) }}
                         />
                     </div>
-                    <Link to="search" className="searchLink"><Search type='text' placeholder="                Pesquisa"/></Link>
+                    <SearchBar id="search_bar" type='text' placeholder="Pesquisa" onChange={this.filter} />
                     <Profile src={profilePic} />
                 </Container>
-
             </Div>
         )
     }

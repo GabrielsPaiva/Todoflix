@@ -3,11 +3,12 @@ import { createGlobalStyle } from "styled-components"
 
 // components
 import Header from "./components/Header"
-import Main from "./components/Main"
+import Main from "./pages/Main"
 import Todos from "./pages/Todos"
 import Favoritos from "./pages/Favoritos"
 import JaVistos from "./pages/JaVistos"
 import Search from "./pages/Search"
+import Adicionados from "./pages/Adicionados"
 
 import {
   BrowserRouter as Router,
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="favoritos" element={<Favoritos />} />
         <Route path="jaVistos" element={<JaVistos />} />
         <Route path="search" element={<Search/>}/>
+        <Route path="adicionados" element={<Adicionados/>}/>
       </Routes>
 
     </Router>

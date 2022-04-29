@@ -1,9 +1,7 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import ReactStars from "react-rating-stars-component"
 import selectedImage from "../assets/display_image.png"
-import RedButton from "./RedButton"
-import { render } from "@testing-library/react"
 
 
 const info = {
@@ -15,10 +13,6 @@ const info = {
 const P = styled.p`
 margin-bottom: 14px;
 `
-
-
-
-
 const Div = styled.div`
 background-color: #000;
 position: fixed;
@@ -177,9 +171,9 @@ export default class FilmModal extends React.Component {
       };
 
     render() {
-        if (!this.props.open) return null
         const {overviewLenght} = this.state
         const {close, open} = this.props
+        if (!open) return null
         return (
             <Div>
                 <CloseButton onClick={close}>+</CloseButton>
@@ -191,7 +185,7 @@ export default class FilmModal extends React.Component {
                             <NameInput type="text" />
                         </div>
                         <div>
-                            <div style={{display: "flex", "justify-content": "space-between"}}>
+                            <div style={{display: "flex", justifyContent: "space-between"}}>
                                 <InputTitle>descrição</InputTitle>
                                 <P>{`${overviewLenght}/ 200`}</P>
                             </div>
@@ -200,7 +194,7 @@ export default class FilmModal extends React.Component {
                     </Main>
                     <ImageSection>
                         <SelectImage for="selectButton">Selecione imagem</SelectImage>
-                        <Input type="file" id="selectButton" />
+                        <Input type="file" name="myImage" accept="image/*" id="selectButton" />
                         <FilmImage src={selectedImage} alt="" />
                         <P>Imagem de Capa</P>
                     </ImageSection>
