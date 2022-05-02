@@ -5,15 +5,15 @@
     "overview": "Peter Parker é desmascarado e não consegue mais separar sua vida normal dos grandes riscos de ser um super-herói. Quando ele pede ajuda ao Doutor Estranho, os riscos se tornam ainda mais perigosos, e o forçam a descobrir o que realmente significa ser o Homem-Aranha.",
     "rate": 5,
     "status": "Já Assisti",
-    "favorite": {}
+    "favorite": false
   },
   {
     "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4GTjQXMCYm462PUjRWeN_n-utGKradPgh58dnL41ZwQ5rqfIB592WHfSXxucgP7QEi8s&usqp=CAU",
     "name": "O Jogo da Imitação",
     "overview": "Em 1939, a recém-criada agência de inteligência britânica MI6 recruta Alan Turing, um aluno da Universidade de Cambridge, para entender códigos nazistas, incluindo o \"Enigma\", que criptógrafos acreditavam ser inquebrável. A equipe de Turing, incluindo Joan Clarke, analisa as mensagens de \"Enigma\", enquanto ele constrói uma máquina para decifrá-las. Após desvendar as codificações, Turing se torna herói. Porém, em 1952, autoridades revelam sua homossexualidade, e a vida dele vira um pesadelo.",
     "rate": 4,
-    "status": "Já Assisti",
-    "favorite": {}
+    "status": "Não Assisti",
+    "favorite": false
   },
   {
     "poster": "https://images-eu.ssl-images-amazon.com/images/S/pv-target-images/5121133ed593d8e5fdb29b659638cebe5d245fe3de56d5dc0b0b56b321e6ea97._UY500_UX667_RI_V_TTW_.jpg",
@@ -21,7 +21,7 @@
     "overview": "Dom Cobb é um ladrão com a rara habilidade de roubar segredos do inconsciente, obtidos durante o estado de sono. Impedido de retornar para sua família, ele recebe a oportunidade de se redimir ao realizar uma tarefa aparentemente impossível: plantar uma ideia na mente do herdeiro de um império. Para realizar o crime perfeito, ele conta com a ajuda do parceiro Arthur, o discreto Eames e a arquiteta de sonhos Ariadne. Juntos, eles correm para que o inimigo não antecipe seus passos.",
     "rate": 5,
     "status": "Já Assisti",
-    "favorite": {}
+    "favorite": false
   },
   {
     "poster": "https://i.ytimg.com/vi/ZyGVvAs3FUA/maxresdefault.jpg",
@@ -29,7 +29,7 @@
     "overview": "Um fabricante de brinquedos e sua esposa são aterrorizados por um demônio depois que a sobrinha órfã tenta fazer contato com o espiríto da mãe.",
     "rate": 1,
     "status": "Já Assisti",
-    "favorite": {}
+    "favorite": false
   },
   {
     "poster": "https://lumiere-a.akamaihd.net/v1/images/1920x1080_logo_d3a5a5f4.png",
@@ -37,6 +37,6 @@
     "overview": "Ao nascer, a Viúva Negra, então conhecida como Natasha Romanova, é entregue à KGB, que a prepara para se tornar sua agente suprema. Porém, o seu próprio governo tenta matá-la quando a União Soviética se desfaz.",
     "rate": 3,
     "status": "Já Assisti",
-    "favorite": {}
+    "favorite": false
   }
 ]

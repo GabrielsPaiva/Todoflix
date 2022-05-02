@@ -9,14 +9,12 @@ import {
 import siteLogo from "../assets/site_logo.png"
 import profilePic from "../assets/profile_pic.png"
 import lupa from "../assets/pesquisa_lupa.png"
-import Modal from './CategoryModal'
-import FilmModal from "./AddFilmModal"
+import Modal from '../components/Modals/CategoryModal'
+import FilmModal from "../components/Modals/AddFilmModal"
 import AddButton from "./RedButton"
-import FilmsLibrary from "../FilmsLibrary.json"
 
 // styles
 import styled from "styled-components"
-import Search from "../pages/Search"
 
 
 const Div = styled.div`
@@ -96,9 +94,6 @@ export default class Header extends React.Component {
     state = {
         categoryIsOpen: false,
         addFilmIsOpen: false,
-        Film: FilmsLibrary,
-        searchResult: [],
-        handleInput: null
     }
 
     render() {

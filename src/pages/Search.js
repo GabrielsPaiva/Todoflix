@@ -7,10 +7,6 @@ import ThumbUpGreen from "../assets/thumbUpGreen.png"
 import ThumbUpWhite from "../assets/thumbUpWhite.png"
 import ThumbUpOrange from "../assets/thumbUpOrange.png"
 
-import {
-    Link
-} from "react-router-dom"
-
 const Div = styled.div`
 display: flex;
 flex-wrap: wrap;

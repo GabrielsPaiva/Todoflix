@@ -31,6 +31,10 @@ export default function Todos() {
 
   const Films = [...FilmsLibrary]
 
+  const toggleFavorite = () => {
+    return 
+  }
+
   return (
     <>
       <PageTitle>Todos</PageTitle>
@@ -38,12 +42,12 @@ export default function Todos() {
         {Films.map(item => (
           <S.FilmDiv key={item.id}>
             <S.FilmPoster src={item.poster} alt="" />
-            <FavoriteButton/>
+            <FavoriteButton onClick={toggleFavorite}/>
             <S.Container>
               <S.FilmTitle>{item.name}</S.FilmTitle>
               <S.FilmRateDiv key={item.id}>
                 <S.FilmRate>{`${item.rate}/5`}</S.FilmRate>
-                <S.GreenThumb src={ThumbUpGreen} alt="" />
+                <S.GreenThumb src={ThumbUpGreen} alt=""/>
               </S.FilmRateDiv>
             </S.Container>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
