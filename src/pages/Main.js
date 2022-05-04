@@ -4,11 +4,13 @@ import styled from "styled-components";
 // components
 import FilmsLibrary from "../FilmsLibrary.json"
 import CarouselModal from "../components/Modals/CarouselModal";
+import FavoriteButton from "../components/FavoriteButton"
 import * as S from "./styles/FilmBoxesStyle"
 import * as LFS from "./styles/LastFilmStyle"
 
 // images
 import FavoriteIcon from "../assets/favorite_icon.png"
+import FavoriteRedIcon from "../assets/favoriteRed_icon.png"
 import ThumbUpGreen from "../assets/thumbUpGreen.png"
 import ThumbUpWhite from "../assets/thumbUpWhite.png"
 import ThumbUpOrange from "../assets/thumbUpOrange.png"
@@ -46,6 +48,8 @@ const SliderFavorite = styled.img`
 position: absolute;
 width: 0.5%;
 margin: 0.5em 0 0 20.1em;
+z-index: 1;
+cursor: pointer;
 `
 
 const carouselStyle = {
@@ -65,6 +69,7 @@ export default class Main extends React.Component {
     state = {
         Films: FilmsLibrary,
         carouselModal: false,
+        favoriteImage: FavoriteIcon,
         id: null,
         poster: "",
         jaVisto: "",
@@ -74,11 +79,18 @@ export default class Main extends React.Component {
     }
 
     toggleFavorite = () => {
-        const {id} = this.state
-        if(FilmsLibrary[id].favorite === true){
+        const { id } = this.state
+        if (FilmsLibrary[id].favorite === true) {
             FilmsLibrary[id].favorite = false
         } else {
             FilmsLibrary[id].favorite = true
+        }
+    }
+    toggleFavoriteLastAdded = () => {
+        if(FilmsLibrary[0].favorite){
+            FilmsLibrary[0].favorite = false
+        } else {
+            FilmsLibrary[0].favorite = true
         }
     }
 
@@ -91,14 +103,14 @@ export default class Main extends React.Component {
                             <LFS.Poster src={this.state.Films[0].poster} alt="" />
                         </div>
                         <LFS.AboutLastFilmDiv>
-                            <LFS.Favorite src={FavoriteIcon} alt='' onClick={this.toggleFavorite}/>
+                            <LFS.Favorite src={FilmsLibrary[0].favorite ? FavoriteRedIcon : FavoriteIcon} alt='' onClick={this.toggleFavoriteLastAdded}/>
                             <LFS.P>Visto recentemente</LFS.P>
                             <LFS.FilmsTitle>{this.state.Films[0].name}</LFS.FilmsTitle>
                             <LFS.Overview>{this.state.Films[0].overview}</LFS.Overview>
 
                             <LFS.LastFilmRateDiv>
                                 <LFS.LastFilmRate>{`${this.state.Films[0].rate}/5`}</LFS.LastFilmRate>
-                                <LFS.GreenThumb src alt="" />
+                                <LFS.GreenThumb src={this.state.favoriteImage} alt="" />
                             </LFS.LastFilmRateDiv>
 
                         </LFS.AboutLastFilmDiv>
@@ -117,32 +129,34 @@ export default class Main extends React.Component {
                     />
                     <H2>Destaques</H2>
                     <Carousel {...carouselStyle}>
-                        {this.state.Films.map((item, id) => (
-                            <SliderFilmDiv key={id}
-                                onClick={() => {
-                                    this.setState({
-                                        carouselModal: true,
-                                        id: id,
-                                        poster: FilmsLibrary[id].poster,
-                                        jaVisto: FilmsLibrary[id].status,
-                                        name: FilmsLibrary[id].name,
-                                        overview: FilmsLibrary[id].overview,
-                                        rate: FilmsLibrary[id].rate
-                                    })
-                                }}>
+                        {this.state.Films.map((item, id, id2) => (
+                            <div key={id}>
+                                <SliderFavorite src={FilmsLibrary[id].favorite ? FavoriteRedIcon : FavoriteIcon} alt="" onClick={this.toggleFavorite} />
+                                <SliderFilmDiv
+                                    onClick={() => {
+                                        this.setState({
+                                            carouselModal: true,
+                                            poster: FilmsLibrary[id].poster,
+                                            jaVisto: FilmsLibrary[id].status,
+                                            name: FilmsLibrary[id].name,
+                                            overview: FilmsLibrary[id].overview,
+                                            rate: FilmsLibrary[id].rate
+                                        })
+                                    }}
+                                    onMouseEnter={() => { this.setState({ id: id }) }}>
 
-                                <S.FilmPoster src={item.poster} alt='' />
-                                <SliderFavorite src={FavoriteIcon} alt="" onClick={this.toggleFavorite}/>
-                                <S.Container>
-                                    <S.FilmTitle>{item.name}</S.FilmTitle>
-                                    <S.FilmRateDiv>
-                                        <S.FilmRate>{`${item.rate}/5`}</S.FilmRate>
-                                        <S.GreenThumb src alt="" />
-                                    </S.FilmRateDiv>
-                                </S.Container>
+                                    <S.FilmPoster src={item.poster} alt='' />
+                                    <S.Container>
+                                        <S.FilmTitle>{item.name}</S.FilmTitle>
+                                        <S.FilmRateDiv>
+                                            <S.FilmRate>{`${item.rate}/5`}</S.FilmRate>
+                                            <S.GreenThumb src={this.state.favoriteImage} alt="" />
+                                        </S.FilmRateDiv>
+                                    </S.Container>
 
-                                <S.Overview>{item.overview}</S.Overview>
-                            </SliderFilmDiv>
+                                    <S.Overview>{item.overview}</S.Overview>
+                                </SliderFilmDiv>
+                            </div>
                         ))}
                     </Carousel>
                 </CarouselDiv>

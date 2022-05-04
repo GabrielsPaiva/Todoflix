@@ -31,18 +31,14 @@ export default function Todos() {
 
   const Films = [...FilmsLibrary]
 
-  const toggleFavorite = () => {
-    return 
-  }
-
   return (
     <>
       <PageTitle>Todos</PageTitle>
       <FilmsCatalogueDiv>
-        {Films.map(item => (
-          <S.FilmDiv key={item.id}>
+        {Films.map((item, id) => (
+          <S.FilmDiv key={id}>
             <S.FilmPoster src={item.poster} alt="" />
-            <FavoriteButton onClick={toggleFavorite}/>
+            <FavoriteButton indexNumber={item.number}/>
             <S.Container>
               <S.FilmTitle>{item.name}</S.FilmTitle>
               <S.FilmRateDiv key={item.id}>

@@ -53,10 +53,10 @@ export default class Search extends React.Component {
             <>
             <PageTitle>Já Vistos</PageTitle>
             <Div>
-                {searchResult.map(item =>(
-                    <S.FilmDiv key={item.id}>
+                {searchResult.map((item, id) =>(
+                    <S.FilmDiv key={id}>
                     <S.FilmPoster src={item.poster} alt="" />
-                    <FavoriteButton/>
+                    <FavoriteButton indexNumber={item.number}/>
                     <S.Container>
                       <S.FilmTitle>{item.name}</S.FilmTitle>
                       <S.FilmRateDiv key={item.id}>
