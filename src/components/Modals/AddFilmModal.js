@@ -2,6 +2,7 @@ import React from "react"
 import ReactStars from "react-rating-stars-component"
 import selectedImage from "../../assets/display_image.png"
 import * as S from "./style"
+import FilmsLibrary from "../../FilmsLibrary.json"
 
 
 const info = {
@@ -13,47 +14,106 @@ const info = {
 export default class FilmModal extends React.Component {
 
     state = {
-        overviewLenght: 0
+        display: "none",
+        overviewLenght: 0,
+        poster: "",
+        name: "",
+        overview: "",
+        rate: null,
+        status: "",
+        number: null,
     }
 
-    handleOverviewChange = (e) => {
-        if(e.target.value.length > 0){
-            this.setState({
-                overviewLenght: e.target.value.length
-            })
-        }else{
-            this.setState({
-                overviewLenght: 0
-            })
+    handleChange = (e) => {
+        if (e >= 1) {
+            this.setState({ rate: e })
+        } else if (e.target.name === "name") {
+            this.setState({ name: e.target.value })
+        } else if (e.target.name === "overview") {
+            this.setState({ overview: e.target.value })
+            if (e.target.value.length > 0) {
+                this.setState({
+                    overviewLenght: e.target.value.length
+                })
+            } else {
+                this.setState({
+                    overviewLenght: 0
+                })
+            }
+        } else if (e.target.name === "image") {
+            this.setState({ poster: e.target.value })
+        } else if (e.target.name === "status") {
+            this.setState({ status: e.target.value })
         }
-      };
+    }
+
+    FilmsSubmit = () => {
+        const { poster, name, overview, rate, status } = this.state
+        FilmsLibrary.push({
+            poster: poster,
+            name: name,
+            overview: overview,
+            rate: rate,
+            status: status,
+            favorite: null,
+            number: FilmsLibrary.length,
+            adicionado: true
+        })
+
+        return this.cancel()
+    }
+
+    cancel = () => {
+        this.setState({
+            overviewLenght: 0,
+            poster: "",
+            name: "",
+            overview: "",
+            rate: null,
+            status: "",
+            favorite: false,
+            number: null,
+        })
+        return this.props.close()
+    }
 
     render() {
-        const {overviewLenght} = this.state
-        const {close, open} = this.props
+        const { overviewLenght } = this.state
+        const { close, open } = this.props
         if (!open) return null
         return (
             <S.Div>
-                <S.CloseButton onClick={close}>+</S.CloseButton>
+                <S.CloseButton onClick={this.cancel}>+</S.CloseButton>
                 <S.Container>
                     <S.Main>
                         <S.ModalTitle>Adicionar Filme</S.ModalTitle>
                         <div>
                             <S.InputTitle>nome</S.InputTitle>
-                            <S.NameInput type="text" />
+                            <S.NameInput type="text" name="name" onChange={this.handleChange} />
                         </div>
                         <div>
-                            <div style={{display: "flex", justifyContent: "space-between"}}>
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
                                 <S.InputTitle>descrição</S.InputTitle>
                                 <S.P>{`${overviewLenght}/ 200`}</S.P>
                             </div>
-                            <S.OverviewInput maxLength={200} onChange={this.handleOverviewChange} />
+                            <S.OverviewInput
+                                maxLength={200}
+                                name="overview"
+                                onChange={this.handleChange}
+                            />
                         </div>
                     </S.Main>
                     <S.ImageSection>
-                        <S.SelectImage for="selectButton">Selecione imagem</S.SelectImage>
-                        <S.Input type="file" name="myImage" accept="image/*" id="selectButton" />
-                        <S.FilmImage src={selectedImage} alt="" />
+                        <input
+                            type="url"
+                            name="image"
+                            accept="image/*"
+                            id="selectButton"
+                            style={{ display: this.state.display, position: "absolute", top: "32em", width: "33.5%", color: "black", outline: "none" }}
+                            onChange={this.handleChange}
+                        />
+                        <S.SelectImage for="selectButton" onClick={() => { this.setState({ display: "inherit" }) }}>Selecione imagem</S.SelectImage>
+                        <S.FilmImage src={this.state.poster === "" ? selectedImage : this.state.poster} alt="" />
                         <S.P>Imagem de Capa</S.P>
                     </S.ImageSection>
                 </S.Container>
@@ -61,22 +121,22 @@ export default class FilmModal extends React.Component {
                     <S.P>Status</S.P>
                     <S.RadioInputsDiv>
                         <div>
-                            <S.RadioInput type="radio" name="status" value="seen" />
+                            <S.RadioInput type="radio" name="status" value="Já Assisti" onChange={this.handleChange} />
                             <S.Label>Já Assisti</S.Label>
                         </div>
                         <div>
-                            <S.RadioInput type="radio" name="status" value="not seen" />
+                            <S.RadioInput type="radio" name="status" value="Não Assisti" onChange={this.handleChange} />
                             <S.Label>Não assisti ainda</S.Label>
                         </div>
                     </S.RadioInputsDiv>
                 </S.Status>
                 <S.RateDiv>
                     <S.RateTitle>Nota</S.RateTitle>
-                    <ReactStars {...info} />
+                    <ReactStars {...info} onChange={this.handleChange} />
                 </S.RateDiv>
                 <S.BottomButtons>
-                    <S.CancelButton onClick={close}>Cancelar</S.CancelButton>
-                    <S.ConfirmButton>Confirmar</S.ConfirmButton>
+                    <S.CancelButton onClick={this.cancel}>Cancelar</S.CancelButton>
+                    <S.ConfirmButton onClick={this.FilmsSubmit}>Confirmar</S.ConfirmButton>
                 </S.BottomButtons>
             </S.Div>
         )

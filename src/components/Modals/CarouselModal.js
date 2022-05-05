@@ -4,6 +4,7 @@ import ReactStars from "react-rating-stars-component";
 import  FilmsLibrary from  "../../FilmsLibrary.json"
 import * as S from "./style"
 import Favorite from "../../assets/favorite_icon.png"
+import FavoriteRed from "../../assets/favoriteRed_icon.png"
 import editButton from "../../assets/edit_button.png"
 
 const Div = styled.div`
@@ -82,8 +83,18 @@ margin-top: 10px;
 
 export default class carouselModal extends React.Component {
 
+    toggleFavorite = () => {
+        const { indexNumber } = this.props
+        if (FilmsLibrary[indexNumber].favorite === true) {
+            FilmsLibrary[indexNumber].favorite = false
+            
+        } else {
+            FilmsLibrary[indexNumber].favorite = true
+        }
+    }
+
     render() {
-        const {close, open, poster, jaVisto, name, overview, rate} = this.props
+        const {close, open, poster, jaVisto, name, overview, rate, indexNumber} = this.props
         if (!open) return null
         return (
             <Div>
@@ -94,7 +105,7 @@ export default class carouselModal extends React.Component {
                         <Status>
                         <p>{jaVisto}</p>
                         </Status>
-                        <FavoriteIcon src={Favorite} alt=""/>
+                        <FavoriteIcon src={FilmsLibrary[indexNumber].favorite ? FavoriteRed : Favorite} alt="" onClick={this.toggleFavorite}/>
                         <EditButton src={editButton} alt=""/>
                     </div>
                     <Title>{name}</Title>

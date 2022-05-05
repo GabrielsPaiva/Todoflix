@@ -85,8 +85,10 @@ export const Input = styled.input`
 display: none;
 `
 export const FilmImage = styled.img`
-    border: solid 1px gray;
-    border-radius: 4px;
+border: solid 1px gray;
+border-radius: 4px;
+width: 300px;
+height: 160px;
 `
 export const Status = styled.div`
 margin-left: 5em;

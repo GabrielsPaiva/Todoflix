@@ -1,5 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { generateMedia } from "styled-media-query";
+
+const customMedia = generateMedia({
+    laptop: "1024px"
+})
 
 const AddButton = styled.button`
 background: #E71B27;
@@ -15,6 +20,11 @@ cursor: pointer;
 }:active{
     border: none;
 }
+
+    ${customMedia.lessThan("laptop")`
+        width: 65%;
+        margin: 0 0.9em 0 5em;
+    `}
 `
 
 export default function redButton({buttonText, click}){

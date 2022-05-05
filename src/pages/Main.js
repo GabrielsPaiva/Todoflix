@@ -4,7 +4,6 @@ import styled from "styled-components";
 // components
 import FilmsLibrary from "../FilmsLibrary.json"
 import CarouselModal from "../components/Modals/CarouselModal";
-import FavoriteButton from "../components/FavoriteButton"
 import * as S from "./styles/FilmBoxesStyle"
 import * as LFS from "./styles/LastFilmStyle"
 
@@ -25,17 +24,17 @@ import Carousel from "nuka-carousel";
 
 const CarouselDiv = styled.div`
 width: 97%;
-height: fit-content;
-margin: 6em 0 0 3%;
+height: 400px;
+margin: 4em 0 0 3%;
 `
-const H2 = styled.div`
+const H2 = styled.h2`
 font-size: 25px;
 margin-bottom: 1em;
 `
 const SliderFilmDiv = styled.div`
 display: flex;
 flex-direction: column;
-width: 360px; 
+width: 98%; 
 height: 350px;
 margin: 0 1em 5em 0;
 cursor: pointer;
@@ -46,8 +45,8 @@ cursor: pointer;
 `
 const SliderFavorite = styled.img`
 position: absolute;
-width: 0.5%;
-margin: 0.5em 0 0 20.1em;
+width: 32px;
+margin: 0.5em 0 0 20em;
 z-index: 1;
 cursor: pointer;
 `
@@ -57,6 +56,7 @@ const carouselStyle = {
     wrapAround: true,
     pagination: false,
     autoplay: true,
+    adaptiveHeight: true,
     defaultControlsConfig: {
         nextButtonStyle: { background: `url(${rightArrow}) no-repeat center`, color: "transparent", height: "10em", marginBottom: "10em" },
         prevButtonStyle: { background: `url(${leftArrow}) no-repeat center`, color: "transparent", height: "10em", marginBottom: "10em" },
@@ -75,7 +75,8 @@ export default class Main extends React.Component {
         jaVisto: "",
         name: "",
         overview: "",
-        rate: null
+        rate: null,
+        indexNumber: null
     }
 
     toggleFavorite = () => {
@@ -87,7 +88,7 @@ export default class Main extends React.Component {
         }
     }
     toggleFavoriteLastAdded = () => {
-        if(FilmsLibrary[0].favorite){
+        if (FilmsLibrary[0].favorite) {
             FilmsLibrary[0].favorite = false
         } else {
             FilmsLibrary[0].favorite = true
@@ -95,22 +96,23 @@ export default class Main extends React.Component {
     }
 
     render() {
+        const { Films } = this.state
         return (
             <div>
                 <LFS.LastFilmDiv>
                     <LFS.LastFilmBox>
                         <div>
-                            <LFS.Poster src={this.state.Films[0].poster} alt="" />
+                            <LFS.Poster src={Films[0].poster} alt="" />
                         </div>
                         <LFS.AboutLastFilmDiv>
-                            <LFS.Favorite src={FilmsLibrary[0].favorite ? FavoriteRedIcon : FavoriteIcon} alt='' onClick={this.toggleFavoriteLastAdded}/>
+                            <LFS.Favorite src={FilmsLibrary[0].favorite ? FavoriteRedIcon : FavoriteIcon} alt='' onClick={this.toggleFavoriteLastAdded} />
                             <LFS.P>Visto recentemente</LFS.P>
-                            <LFS.FilmsTitle>{this.state.Films[0].name}</LFS.FilmsTitle>
-                            <LFS.Overview>{this.state.Films[0].overview}</LFS.Overview>
+                            <LFS.FilmsTitle>{Films[0].name}</LFS.FilmsTitle>
+                            <LFS.Overview>{Films[0].overview}</LFS.Overview>
 
                             <LFS.LastFilmRateDiv>
-                                <LFS.LastFilmRate>{`${this.state.Films[0].rate}/5`}</LFS.LastFilmRate>
-                                <LFS.GreenThumb src={this.state.favoriteImage} alt="" />
+                                <LFS.LastFilmRate>{`${Films[0].rate}/5`}</LFS.LastFilmRate>
+                                <LFS.GreenThumb src={Films[0].rate <= 1 ? ThumbUpWhite : Films[0].rate <= 3 ? ThumbUpOrange : ThumbUpGreen} alt="" />
                             </LFS.LastFilmRateDiv>
 
                         </LFS.AboutLastFilmDiv>
@@ -126,10 +128,11 @@ export default class Main extends React.Component {
                         name={this.state.name}
                         overview={this.state.overview}
                         rate={this.state.rate}
+                        indexNumber={this.state.indexNumber}
                     />
                     <H2>Destaques</H2>
                     <Carousel {...carouselStyle}>
-                        {this.state.Films.map((item, id, id2) => (
+                        {this.state.Films.map((item, id) => (
                             <div key={id}>
                                 <SliderFavorite src={FilmsLibrary[id].favorite ? FavoriteRedIcon : FavoriteIcon} alt="" onClick={this.toggleFavorite} />
                                 <SliderFilmDiv
@@ -140,7 +143,8 @@ export default class Main extends React.Component {
                                             jaVisto: FilmsLibrary[id].status,
                                             name: FilmsLibrary[id].name,
                                             overview: FilmsLibrary[id].overview,
-                                            rate: FilmsLibrary[id].rate
+                                            rate: FilmsLibrary[id].rate,
+                                            indexNumber: item.number
                                         })
                                     }}
                                     onMouseEnter={() => { this.setState({ id: id }) }}>
@@ -150,7 +154,7 @@ export default class Main extends React.Component {
                                         <S.FilmTitle>{item.name}</S.FilmTitle>
                                         <S.FilmRateDiv>
                                             <S.FilmRate>{`${item.rate}/5`}</S.FilmRate>
-                                            <S.GreenThumb src={this.state.favoriteImage} alt="" />
+                                            <S.GreenThumb src={item.rate <= 1 ? ThumbUpWhite : item.rate <= 3 ? ThumbUpOrange : ThumbUpGreen} alt="" />
                                         </S.FilmRateDiv>
                                     </S.Container>
 

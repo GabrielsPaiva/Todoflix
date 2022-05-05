@@ -1,5 +1,10 @@
 import styled from "styled-components";
+import media, {generateMedia} from "styled-media-query"
 
+
+const customMedia = generateMedia({
+    laptop: "1024px"
+})
 
 export const FilmDiv = styled.div`
 display: flex;
@@ -7,9 +12,14 @@ flex-direction: column;
 width: 360px; 
 height: 350px;
 margin: 0 1em 5em 0;
+
+${customMedia.lessThan("laptop")`
+`}
 `
 export const FilmPoster = styled.img`
 border-radius: 5px;
+width: 362px;
+height: 207px;
 `
 export const Container = styled.div`
 display: flex;
@@ -21,6 +31,11 @@ margin: 0.5em 0 0.5em 0;
 export const FilmTitle = styled.h2`
 font-size: 15px;
 width: 100%;
+
+
+${customMedia.lessThan("laptop")`
+font-size: 12px;
+`}
 `
 
 export const FilmRateDiv = styled.div`

@@ -15,7 +15,11 @@ import AddButton from "./RedButton"
 
 // styles
 import styled from "styled-components"
+import { generateMedia } from "styled-media-query"
 
+const customMedia = generateMedia({
+    laptop: "1024px"
+})
 
 const Div = styled.div`
 background-color: black;
@@ -61,9 +65,13 @@ display: flex;
 flex-direction: column;
 align-items: center;
 width: 8em;
-margin-left: 3%;
+margin-left: 4%;
 top: 2.4em;
 left: 16%;
+
+${customMedia.lessThan("laptop")`
+margin-left: 6%;
+`}
 `
 const Category = styled.details`
 font-size: 20px;
@@ -118,6 +126,7 @@ export default class Header extends React.Component {
                         <AddButton
                             click={() => { this.setState({ addFilmIsOpen: true }) }}
                             buttonText="Adicionar filme"
+                            
                         />
                         <FilmModal
                             open={this.state.addFilmIsOpen}
@@ -125,7 +134,7 @@ export default class Header extends React.Component {
                         />
                     </div>
                     <Link className="searchLink" to="search">
-                        <SearchBar autoFocus={this.props.focus} type='text' placeholder="Pesquisa"/>
+                        <SearchBar autoFocus={this.props.focus} type='text' placeholder="Pesquisa" />
                     </Link>
                     <Profile id="profile" src={profilePic} />
                 </Container>
