@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import media from "styled-media-query";
 
 // components
 import FilmsLibrary from "../FilmsLibrary.json"
@@ -49,6 +50,11 @@ width: 32px;
 margin: 0.5em 0 0 20em;
 z-index: 1;
 cursor: pointer;
+
+${media.lessThan("huge")`
+width: 25px;
+margin-left: 1%;
+`}
 `
 
 const carouselStyle = {
@@ -81,6 +87,8 @@ export default class Main extends React.Component {
 
     toggleFavorite = () => {
         const { id } = this.state
+        this.setState({id: id})
+
         if (FilmsLibrary[id].favorite === true) {
             FilmsLibrary[id].favorite = false
         } else {
@@ -90,12 +98,15 @@ export default class Main extends React.Component {
     toggleFavoriteLastAdded = () => {
         if (FilmsLibrary[0].favorite) {
             FilmsLibrary[0].favorite = false
+            this.setState({favoriteImage: FavoriteIcon})
         } else {
             FilmsLibrary[0].favorite = true
+            this.setState({favoriteImage: FavoriteRedIcon})
         }
     }
 
     render() {
+        console.log(this.state.id)
         const { Films } = this.state
         return (
             <div>
@@ -105,7 +116,7 @@ export default class Main extends React.Component {
                             <LFS.Poster src={Films[0].poster} alt="" />
                         </div>
                         <LFS.AboutLastFilmDiv>
-                            <LFS.Favorite src={FilmsLibrary[0].favorite ? FavoriteRedIcon : FavoriteIcon} alt='' onClick={this.toggleFavoriteLastAdded} />
+                            <LFS.Favorite src={this.state.favoriteImage} alt='' onClick={this.toggleFavoriteLastAdded} />
                             <LFS.P>Visto recentemente</LFS.P>
                             <LFS.FilmsTitle>{Films[0].name}</LFS.FilmsTitle>
                             <LFS.Overview>{Films[0].overview}</LFS.Overview>
@@ -134,7 +145,7 @@ export default class Main extends React.Component {
                     <Carousel {...carouselStyle}>
                         {this.state.Films.map((item, id) => (
                             <div key={id}>
-                                <SliderFavorite src={FilmsLibrary[id].favorite ? FavoriteRedIcon : FavoriteIcon} alt="" onClick={this.toggleFavorite} />
+                                <SliderFavorite src={FilmsLibrary[id].favorite ? FavoriteRedIcon : FavoriteIcon} alt="" onClick={this.toggleFavorite}/>
                                 <SliderFilmDiv
                                     onClick={() => {
                                         this.setState({

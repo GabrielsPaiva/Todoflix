@@ -12,14 +12,20 @@ flex-direction: column;
 width: 360px; 
 height: 350px;
 margin: 0 1em 5em 0;
-
-${customMedia.lessThan("laptop")`
-`}
 `
 export const FilmPoster = styled.img`
 border-radius: 5px;
 width: 362px;
 height: 207px;
+
+${media.lessThan("huge")`
+width: 270px;
+height: 150px;
+`}
+${customMedia.lessThan("laptop")`
+width: 190px;
+height: 130px;
+`}
 `
 export const Container = styled.div`
 display: flex;

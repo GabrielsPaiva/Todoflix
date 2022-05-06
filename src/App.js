@@ -9,6 +9,7 @@ import Favoritos from "./pages/Favoritos"
 import JaVistos from "./pages/JaVistos"
 import Search from "./pages/Search"
 import Adicionados from "./pages/Adicionados"
+import FilmsLibrary from "./FilmsLibrary.json"
 
 import {
   BrowserRouter as Router,
@@ -43,8 +44,8 @@ export default function App() {
         <Route path="todos" element={<Todos />} />
         <Route path="favoritos" element={<Favoritos />} />
         <Route path="jaVistos" element={<JaVistos />} />
-        <Route path="search" element={<Search/>}/>
-        <Route path="adicionados" element={<Adicionados/>}/>
+        <Route path="search" element={<Search />} />
+        <Route path="adicionados" element={<Adicionados />} />
       </Routes>
 
     </Router>

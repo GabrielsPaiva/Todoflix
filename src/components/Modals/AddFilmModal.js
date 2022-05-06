@@ -19,9 +19,9 @@ export default class FilmModal extends React.Component {
         poster: "",
         name: "",
         overview: "",
-        rate: null,
+        rate: 0,
         status: "",
-        number: null,
+        number: 0,
     }
 
     handleChange = (e) => {
@@ -55,11 +55,10 @@ export default class FilmModal extends React.Component {
             overview: overview,
             rate: rate,
             status: status,
-            favorite: null,
+            favorite: false,
             number: FilmsLibrary.length,
             adicionado: true
         })
-
         return this.cancel()
     }
 
@@ -79,7 +78,7 @@ export default class FilmModal extends React.Component {
 
     render() {
         const { overviewLenght } = this.state
-        const { close, open } = this.props
+        const { open } = this.props
         if (!open) return null
         return (
             <S.Div>

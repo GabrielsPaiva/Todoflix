@@ -12,6 +12,7 @@ import lupa from "../assets/pesquisa_lupa.png"
 import Modal from '../components/Modals/CategoryModal'
 import FilmModal from "../components/Modals/AddFilmModal"
 import AddButton from "./RedButton"
+import FilmsLibrary from "../FilmsLibrary.json"
 
 // styles
 import styled from "styled-components"
@@ -108,7 +109,7 @@ export default class Header extends React.Component {
         return (
             <Div>
                 <Container>
-                    <Link to="/" className="logoLink"> <Logo src={siteLogo} alt="" /> </Link>
+                    <Link to="/" className="logoLink"> <Logo src={siteLogo} alt="" onClick={this.local} /> </Link>
                     <Link to="/" className="homeLink"> <Home>Inicio</Home></Link>
                     <CategoryModal
                         onMouseEnter={() => { this.setState({ categoryIsOpen: true }) }}
@@ -126,7 +127,6 @@ export default class Header extends React.Component {
                         <AddButton
                             click={() => { this.setState({ addFilmIsOpen: true }) }}
                             buttonText="Adicionar filme"
-                            
                         />
                         <FilmModal
                             open={this.state.addFilmIsOpen}
